@@ -18,4 +18,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Pull code to server with SSH
-        run: ssh -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd /srv/www/dashou-dot-dev && git pull origin main'
+        run: ssh -o StrictHostKeyChecking=no server@2a04:ee40:2058:200:3af3:abff:feac:5d64 'cd /srv/www/dashou-dot-dev && git pull origin main'
