@@ -1,0 +1,21 @@
+name: Deploy to Host
+on:
+  push:
+    branches:
+      - main # Triggers when push on main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Pull code to server with SSH
+        run: ssh -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd /srv/www/dashou-dot-dev && git pull origin main'
