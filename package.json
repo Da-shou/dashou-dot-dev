@@ -1,0 +1,32 @@
+{
+  "name": "dashou-dot-dev",
+  "version": "1.0.0",
+  "description": "A simple blogging website to post updates about my various projects.",
+  "keywords": [
+    "html",
+    "css",
+    "js",
+    "h2o",
+    "express",
+    "sqlite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@da-shou:Da-shou/dashou-dot-dev.git"
+  },
+  "license": "ISC",
+  "author": "Ylli Fazlija",
+  "type": "script",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1"
+  }
+}
