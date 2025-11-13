@@ -7,6 +7,7 @@
 This is a small web developement project where I will do my best to create a functional blogging platform to post updates about my projects. 
 The main website will contain a quick presentation of me and my interests, and contain a list of the different projects I have worked on and/or have finished working on. 
 The blog post will contain titles, tags, summaries, content (text, images, videos, audio) and comment space.
+One of the goals of this project is to have a very fast and dynamic website, that loads as fast as possible to get the smoothest experience possible.
 
 ### Technologies
 
