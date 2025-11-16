@@ -18,4 +18,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_SECRET_KEY }}
 
       - name: Pull code to server with SSH
-        run: ssh -vvv -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; npm install; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
+        run: ssh -i ${{ secrets.SSH_SECRET_KEY }} -vvv -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; npm install; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
