@@ -18,7 +18,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_SECRET_KEY }}
 
       - name: Create Key
-        run: echo ${{ secrets.SSH_SECRET_KEY }} > secret_key
+        run: echo '"${{ secrets.SSH_SECRET_KEY }}"' > secret_key
 
       - name: Pull code to server with SSH
         run: ssh -i secret_key -v -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
