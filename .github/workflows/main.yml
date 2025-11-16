@@ -12,17 +12,16 @@ jobs:
     - name: Test port 22 with nc
       run: nc -zv ${{ secrets.SSH_REMOTE_HOST }} 22
 
-  ssh-job:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Execute command on remote server via SSH
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.SSH_REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-          cd ~/www/dashou-dot-dev && git pull origin main;
-          echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Pull code to server with SSH
+        run: ssh -v -o StrictHostKeyChecking=no server@${{ secrets.SSH_REMOTE_HOST }} 'cd ~/www/dashou-dot-dev && git pull origin main; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
