@@ -12,17 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create SSH key
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_SECRET_KEY" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-        shell: bash
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_SECRET_KEY}}
-          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+      - name: SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_SECRET_KEY }}
 
       - name: Pull code to server with SSH
-        run: ssh -i /home/runner/work/dashou-dot-dev/private.key server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; npm install; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
+        run: ssh -v -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
