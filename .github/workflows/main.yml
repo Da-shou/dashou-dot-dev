@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Ping server
-      run: ping -c 4 ${{ secrets.REMOTE_HOST }}
+      run: ping -c 4 ${{ secrets.SSH_REMOTE_HOST }}
 
     - name: Test port 22 with nc
-      run: nc -zv ${{ secrets.REMOTE_HOST }} 22
+      run: nc -zv ${{ secrets.SSH_REMOTE_HOST }} 22
 
   ssh-job:
     runs-on: ubuntu-latest
