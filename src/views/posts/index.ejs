@@ -4,9 +4,8 @@
 
 <dl id="posts">
   <% posts.forEach(function(post) { %>
-    <dt><%= post.title %></dt>
+    <dt><%= post.id_post %> : <%= post.title %></dt>
     <dd><%= post.content %></dd>
-    <dd><%= post.id_post %></dd>
   <% }) %>
 </dl>
 
