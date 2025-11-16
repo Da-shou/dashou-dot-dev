@@ -25,4 +25,4 @@ jobs:
           SSH_KEY_PATH: ${{ github.workspace }}/../private.key
 
       - name: Pull code to server with SSH
-        run: ssh -i /home/runner/work/dashou-dot-dev/dashou-dot-dev/../private.key -vvv -o StrictHostKeyChecking=no server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; npm install; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
+        run: ssh -i /home/runner/work/dashou-dot-dev/private.key server@${{ secrets.HOST_IP }} 'cd ~/www/dashou-dot-dev && git pull origin main; npm install; echo ${{ secrets.ROOT_PASSWD }} | sudo -S systemctl restart dashou-dot-dev'
