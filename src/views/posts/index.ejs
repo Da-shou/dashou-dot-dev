@@ -1,11 +1,12 @@
 <%- include('../header') -%>
 
-<h1>Posts</h1>
+<h1><%= title %></h1>
 
 <dl id="posts">
   <% posts.forEach(function(post) { %>
-    <dt><%= post.title %></dt>
-    <dd><%= post.body %></dd>
+    <dt><%= post.id_post %> : <%= post.title %></dt>
+    <dd><%= post.content %></dd>
+    <dd><%= post.timestamp %></dd>
   <% }) %>
 </dl>
 
