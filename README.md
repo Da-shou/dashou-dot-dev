@@ -10,19 +10,19 @@ The blog post will contain titles, tags, summaries, content (text, images, video
 
 ### Technologies
 
-|*Part*|*Technology*|*Why*
-|--|--|--
-|Back-end   |Javascript, using ExpressJS|Fast and quick to setup.                                                                       |
-|Front-end  |HTML5 + CSS3               |I wish to keep things as simple as possible and focus on the content.                          |
-|Database   |SQLite                      |The content needs to load fast and the requests won't be complex.                              |
-|HTTP Server|h2o @ Ubuntu 24.04.4 LTS   |I heard about h2o being an extremely lightweight and fast server, so i wanted to test it out.  |
+| *Part*      | *Technology*                | *Why*                                                                                         |
+|-------------|-----------------------------|-----------------------------------------------------------------------------------------------|
+| Back-end    | Javascript, using ExpressJS | Fast and quick to setup.                                                                      |
+| Front-end   | HTML5 + CSS3                | I wish to keep things as simple as possible and focus on the content.                         |
+| Database    | SQLite                      | The content needs to load fast and the requests won't be complex.                             |
+| HTTP Server | h2o @ Ubuntu 24.04.4 LTS    | I heard about h2o being an extremely lightweight and fast server, so i wanted to test it out. |
 
 ### Milestones
 - [x] Create a web server and home-host @ https://dashou.dev
 - [x] Setup a GitHub action to pull the code to the server on each main branch push.
-- [ ] Design the database schema
+- [x] Design the database schema
 - [ ] Sketch an idea of the different pages of the website
-- [ ] Get the MySQL server working
+- [x] Get the SQLite server working
 - [ ] Get the ExpressJS back-end working
 - [ ] Construct the different static web pages
-- [ ] Make the dynamic content load in the static web pages
+- [x] Make the dynamic content load in the static web pages

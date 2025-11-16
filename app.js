@@ -1,3 +1,5 @@
+'use strict';
+
 // Dependencies
 const express = require("express");
 const path = require("node:path");
@@ -23,5 +25,5 @@ app.get("/", site.index);
 app.get("/posts", post.list);
 
 app.listen(port, () => {
-  console.log(`🚀 dashou-dot-dev started and listening on port ${port}`);
+  console.log(`🚀 dashou-dot-dev started and listening on port ${port} !`);
 });
