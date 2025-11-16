@@ -8,12 +8,10 @@ const db = new sqlite3.Database(path.join(__dirname,"../database/blogdata.db"), 
 	else console.log("✅ Successfully connected to the database !");
 });
 
-let posts;
-db.all("SELECT id_post, title, content FROM post", (err, rows) => {
-	if (err) throw err; 	
-	posts = rows;	
-});
-
 exports.list = function(_, res){
-  res.render('posts', { title: 'Posts', posts: posts });
+	db.all("SELECT id_post, title, content, timestamp FROM post", (err, rows) => {
+		if (err) throw err;	
+		const posts = rows;
+  		res.render('posts', { title: `Browse ${posts.length} posts...`, posts: posts });
+	});
 };
