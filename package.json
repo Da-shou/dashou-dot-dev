@@ -1,6 +1,6 @@
 {
   "name": "dashou-dot-dev",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple blogging website to post updates about my various projects.",
   "keywords": [
     "html",
@@ -19,6 +19,7 @@
   "type": "script",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon --ext html,css,js,ejs app.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

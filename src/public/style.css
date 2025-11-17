@@ -1,6 +1,67 @@
-header {
-	margin-bottom: 8pt;
+body {
+        font-family: "Domine", serif;
+        font-optical-sizing: auto;
+        font-style: normal;
 }
+
+header {
+        text-align: left;
+        margin-bottom: 32pt;
+}
+
 footer {
-	margin-top: 8pt;
+        text-align: center;
+        margin-top: 32pt;
+}
+
+a {
+        font-weight: bold;
+        text-decoration: none;
+}
+
+.content {
+        width: 50%;
+        margin-top: 16pt;
+        margin-bottom: 16pt;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+.header-links {
+        display: flex;
+        justify-content: space-evenly;
+}
+
+.header-link {
+        margin: 8pt, 16pt, 8pt, 16pt;
+}
+
+#posts {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        row-gap: 32px;
+}
+
+.post-title {
+        font-size: 24px;
+        margin-bottom: 16px;
+}
+
+.post-footer {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+}
+
+.post-readbtn {
+        font-size: 16pt;
+        margin-top: 8px;
+        margin-bottom: 8px;
+}
+
+.post-date {
+        display: flex;
+        align-items: center;
 }

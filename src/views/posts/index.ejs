@@ -2,12 +2,19 @@
 
 <h1><%= title %></h1>
 
-<dl id="posts">
-  <% posts.forEach(function(post) { %>
-    <dt><%= post.id_post %> : <%= post.title %></dt>
-    <dd><%= post.content %></dd>
-    <dd><%= post.timestamp %></dd>
-  <% }) %>
-</dl>
+<div id="posts">
+        <% posts.forEach(function(post) { %>
+        <div class="post">
+                <div class="post-title"><%= post.title %></div>
+                <div class="post-abstract"><%= post.content %></div>
+                <div class="post-footer">
+                        <div class="post-date"><%= post.timestamp %></div>
+                        <div class="post-readbtn">
+                                <a href="/post/<%= post.id_post %>">Read</a>
+                        </div>
+                </div>
+        </div>
+        <% }) %>
+</div>
 
 <%- include('../footer') -%>
