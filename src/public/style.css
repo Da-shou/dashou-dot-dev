@@ -6,12 +6,13 @@ body {
 
 header {
         text-align: left;
-        margin-bottom: 32pt;
+        margin-bottom: 3em;
 }
 
 footer {
         text-align: center;
-        margin-top: 32pt;
+        margin-top: 5em;
+        margin-bottom: 2em;
 }
 
 a {
@@ -21,10 +22,7 @@ a {
 
 .content {
         width: 50%;
-        margin-top: 16pt;
-        margin-bottom: 16pt;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 16pt auto;
 }
 
 .header-links {
@@ -33,23 +31,31 @@ a {
 }
 
 .header-link {
-        margin: 8pt, 16pt, 8pt, 16pt;
+        margin: 0em;
 }
 
 #posts {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        row-gap: 32px;
+        row-gap: 2em;
+}
+
+.post {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 15em;
 }
 
 .post-title {
-        font-size: 24px;
-        margin-bottom: 16px;
+        font-size: 2em;
+        margin-bottom: 1em;
 }
 
 .post-footer {
-        margin-top: 16px;
+        margin-top: 2em;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -57,11 +63,51 @@ a {
 
 .post-readbtn {
         font-size: 16pt;
-        margin-top: 8px;
-        margin-bottom: 8px;
 }
 
 .post-date {
         display: flex;
         align-items: center;
+}
+
+.post-text {
+    width: 60%;
+}
+
+.post-thumbnail {
+    max-width: 30%;
+    height: 15em;
+}
+
+.thumbnail-img {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 900px) {
+    .content {
+        width: 70%;
+    }
+
+    .post {
+        flex-direction: column;
+        max-height: 100%;
+    }
+
+    .post-text {
+        width: 100%;
+        height: 60%;
+        margin-right: 0;
+        margin-bottom: 1em;
+    }
+
+    .post-thumbnail {
+        height: 50%;
+        width: 100%;
+        max-height: 15em;
+    }
+
+    .thumbnail-img {
+        height: 100%;
+    }
 }
