@@ -84,7 +84,7 @@ a {
     height: 100%;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .content {
         width: 70%;
     }
@@ -104,7 +104,6 @@ a {
     .post-thumbnail {
         height: 50%;
         max-width: 100%;
-        max-height: 15em;
     }
 
     .thumbnail-img {
