@@ -1,0 +1,28 @@
+<%- include('../header') -%>
+
+<h1><%= title %></h1>
+
+<div id="posts">
+        <% posts.forEach(function(post) { %>
+            <div class="post">
+                <div class="post-text">
+                    <div class="post-title"><a href="/post/<%= post.id %>"><%= post.title %></a></div>
+                    <div class="post-abstract"><%= post.abstract %></div>
+                    <div class="post-footer">
+                        <div class="post-date"><%= post.timestamp %></div>
+                        <div class="post-readbtn">
+                            <a href="/post/<%= post.id %>">Read</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-thumbnail">
+                    <a href="/post/<%= post.id %>">
+                        <img class="thumbnail-img" src="<%= post.thumbnail %>" alt="Post thumbnail">
+                    </a>
+                </div>
+            </div>
+            <hr style="width:100%; border-color: #cccccc; border-style: solid;">
+        <% }) %>
+</div>
+
+<%- include('../footer') -%>

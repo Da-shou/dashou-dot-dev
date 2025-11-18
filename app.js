@@ -4,6 +4,7 @@
 const express = require("express");
 const path = require("node:path");
 
+const about = require("./src/about");
 const post = require("./src/post");
 const site = require("./src/site");
 
@@ -23,6 +24,9 @@ app.get("/", site.index);
 
 // Post list endpoint
 app.get("/posts", post.list);
+
+// Post about endpoint
+app.get("/about", about.index)
 
 app.listen(port, () => {
   console.log(`🚀 dashou-dot-dev started and listening on port ${port} !`);
