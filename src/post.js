@@ -11,7 +11,7 @@ const db = new sqlite3.Database(path.join(__dirname,"../database/blogdata.db"), 
 const max_abstract_length = 250;
 
 exports.list = function(_, res){
-	db.all("SELECT id_post AS title, abstract, thumbnail, timestamp FROM post", (err, rows) => {
+	db.all("SELECT id_post AS id, title AS title, abstract, thumbnail, timestamp FROM post", (err, rows) => {
 		if (err) throw err;	
 		const posts = rows;
 
