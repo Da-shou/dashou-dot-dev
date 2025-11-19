@@ -1,0 +1,12 @@
+<%- include('../header') -%>
+
+<h1><%= post.title %></h1>
+<h3><%= category %></h3>
+<br>
+Posted at <div class="timestamp"><%= post.timestamp %></div>
+
+<div id="post-content">
+    <%- post.content %>
+</div>
+
+<%- include('../footer') -%>

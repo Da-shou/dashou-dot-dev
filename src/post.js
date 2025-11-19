@@ -11,7 +11,7 @@ const db = new sqlite3.Database(path.join(__dirname,"../database/blogdata.db"), 
 const max_abstract_length = 250;
 
 exports.list = function(_, res){
-	db.all("SELECT id_post AS id, id_category AS category, title, abstract, content, thumbnail, timestamp FROM post", (err, rows) => {
+	db.all("SELECT id_post AS id, title AS title, abstract, thumbnail, timestamp FROM post", (err, rows) => {
 		if (err) throw err;	
 		const posts = rows;
 
@@ -24,3 +24,18 @@ exports.list = function(_, res){
   		res.render('posts/posts.ejs', { title: `Browse ${posts.length} posts...`, posts: posts });
 	});
 };
+
+exports.display_post = function (req, res) {
+        const id = req.params.id
+        db.get(`SELECT title, content, id_category, timestamp FROM post WHERE id_post = ${id} LIMIT 1`, (err, post) => {
+            if (err) throw err;
+
+            if (post) {
+                const id_cat = post.id_category;
+                db.get(`SELECT name from category WHERE category.id_category = ${id_cat} LIMIT 1`, (err, cat) => {
+                    if (err) throw err;
+                    res.render('posts/display_post.ejs', { title: post.title, category: cat.name, post: post });
+                });
+            }
+        });
+}
