@@ -17,13 +17,16 @@ module.exports = app;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views"));
 
-// Making CSS available
+// Making static content available
 app.use(express.static(path.join(__dirname, "src/public")));
 
 app.get("/", site.index);
 
 // Post list endpoint
 app.get("/posts", post.list);
+
+// Post list endpoint
+app.get("/post/:id", post.display_post);
 
 // Post about endpoint
 app.get("/about", about.index)

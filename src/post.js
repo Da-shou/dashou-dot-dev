@@ -24,3 +24,14 @@ exports.list = function(_, res){
   		res.render('posts/posts.ejs', { title: `Browse ${posts.length} posts...`, posts: posts });
 	});
 };
+
+exports.display_post = function (req, res) {
+        const id = req.params.id
+        db.get(`SELECT * FROM post WHERE id_post = ${id} LIMIT 1`, (err, post) => {
+            if (err) throw err;
+
+            if (post) {
+                res.render('posts/display_post.ejs', { title: post.title, post: post });
+            }
+        })
+}
