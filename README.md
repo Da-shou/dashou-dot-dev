@@ -22,7 +22,7 @@ One of the goals of this project is to have a very fast and dynamic website, tha
 - [x] Create a web server and home-host @ https://dashou.dev
 - [x] Setup a GitHub action to pull the code to the server on each main branch push.
 - [x] Design the database schema
-- [ ] Make a function post detail page
+- [x] Make a function post detail page
 - [x] Get the SQLite server working
 - [x] Get the ExpressJS back-end working
 - [x] Make the dynamic content load in the static web pages
