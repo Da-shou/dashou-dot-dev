@@ -29,8 +29,8 @@ app.get("/posts", post.list);
 app.get("/post/:id", post.display_post);
 
 // Post about endpoint
-app.get("/about", about.index)
+app.get("/about", about.index);
 
 app.listen(port, () => {
-  console.log(`🚀 dashou-dot-dev started and listening on port ${port} !`);
+        console.log(`🚀 dashou-dot-dev started and listening on port ${port} !`);
 });
