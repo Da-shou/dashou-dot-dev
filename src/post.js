@@ -41,7 +41,6 @@ exports.display_post = function (req, res) {
 		    pedantic: false,
 	    });
 	    post.content = marked.parse(post.content);
-	    console.log(post.content);
             db.get(`SELECT name
                     from category
                     WHERE category.id_category = ${id_cat}
