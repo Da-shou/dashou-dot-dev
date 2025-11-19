@@ -16,49 +16,105 @@ const db = new sqlite3.Database(path.join(__dirname, "../database/blogdata.db"),
 
 const max_abstract_length = 250;
 
-exports.list = function(_, res) {
-        db.all("SELECT id_post AS id, title AS title, abstract, thumbnail, timestamp FROM post", (err, rows) => {
-                if (err) throw err;
-                const posts = rows;
+const get_post_list_query = `
+        SELECT p.id_post AS id, p.id_category, p.title, p.abstract, p.thumbnail, p.timestamp, c.name AS category
+        FROM post AS p
+        LEFT JOIN category as c
+        ON p.id_category = c.id_category
+        `;
 
-                rows.forEach(post => {
-                        if (post.abstract.length > max_abstract_length) {
-                                post.abstract = post.abstract.substring(0, max_abstract_length + 1) + "...";
-                        }
-                })
+const get_post_details_query = `
+        SELECT p.title, p.content, p.timestamp, c.name AS category
+        FROM post AS p
+        LEFT JOIN category as c
+        ON p.id_category = c.id_category
+        WHERE id_post = ? LIMIT 1`;
 
-                res.render('posts/posts.ejs', {
-                        title: `Browse ${posts.length} posts...`,
-                        posts: posts
+const get_tags_for_post_query = `
+        SELECT t.*
+        FROM tag AS t
+        INNER JOIN post_has_tag AS pt ON t.id_tag = pt.id_tag
+        WHERE pt.id_post = ?;
+        `;
+
+function getPostDetail(id) {
+    return new Promise((resolve, reject) => {
+        // Getting the details of a post
+        db.get(get_post_details_query, [id],
+            (err, post) => {
+                if (err) reject(err);
+                else if (post) {
+                    resolve(post);
+                }
+            });
+    });
+}
+
+function getPostsList() {
+    return new Promise((resolve, reject) => {
+        const posts = db.all(get_post_list_query, (err, rows) => {
+            if (err) reject(err);
+            const posts = rows;
+
+            rows.forEach(post => {
+                if (post.abstract.length > max_abstract_length) {
+                    post.abstract = post.abstract.substring(0, max_abstract_length + 1) + "...";
+                }
+            });
+
+            resolve(posts);
+        });
+    });
+}
+
+function getPostTags(id) {
+    return new Promise((resolve, reject) => {
+        db.all(get_tags_for_post_query, [id],
+            (err, rows) => {
+                if (err) reject(err);
+
+                const tags = [];
+                rows.forEach((tag) => {
+                    tags.push(tag);
                 });
+
+                resolve(tags);
+            });
+    });
+}
+
+exports.list = async function(_, res) {
+        const posts = await getPostsList();
+        const tags_per_posts = [];
+
+        for (const post of posts) {
+            tags_per_posts.push(await getPostTags(post.id));
+        }
+
+        res.render('posts/posts.ejs', {
+                title: `Browse ${posts.length} posts...`,
+                posts: posts,
+                tags: tags_per_posts
         });
 };
 
-exports.display_post = function(req, res) {
-        const id = req.params.id
-        db.get(`SELECT title, content, id_category, timestamp
-            FROM post
-            WHERE id_post = ${id}
-            LIMIT 1`, (err, post) => {
-                if (err) throw err;
-                if (post) {
-                        const id_cat = post.id_category;
-                        marked.use({
-                                gfm: true,
-                                pedantic: false,
-                        });
-                        post.content = marked.parse(post.content);
-                        db.get(`SELECT name
-                    from category
-                    WHERE category.id_category = ${id_cat}
-                    LIMIT 1`, (err, cat) => {
-                                if (err) throw err;
-                                res.render('posts/display_post.ejs', {
-                                        title: post.title,
-                                        category: cat.name,
-                                        post: post
-                                });
-                        });
-                }
-        });
-}
+exports.display_post = async function (req, res) {
+    const id = req.params.id;
+
+    const post = await getPostDetail(id);
+    const tags = await getPostTags(id);
+
+    marked.use({
+        gfm: true,
+        pedantic: false,
+    });
+
+    post.content = marked.parse(post.content);
+    // Getting the tags for the post.
+
+    res.render('posts/display_post.ejs', {
+        title: post.title,
+        post: post,
+        tags: tags,
+    });
+};

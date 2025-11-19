@@ -1,12 +1,21 @@
 <%- include('../header') -%>
 
 <h1><%= post.title %></h1>
-<h3><%= category %></h3>
+
+<div class="post-header-detail">
+        <div class="post-category"><%= post.category %></div>
+        <div class="post-tags">
+                <% tags.forEach(function(tag) { %>
+                <div class="post-tag"><%= tag.name %></div>
+                <% }) %>
+        </div>
+</div>
 <br>
 Posted at <div class="timestamp"><%= post.timestamp %></div>
 
 <div id="post-content">
-    <%- post.content %>
+        <%- post.content %>
 </div>
 
 <%- include('../footer') -%>
+

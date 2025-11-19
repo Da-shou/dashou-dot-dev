@@ -1,135 +1,178 @@
 body {
-    font-family: "Domine", serif;
-    font-optical-sizing: auto;
-    font-style: normal;
+        font-family: "Domine", serif;
+        font-optical-sizing: auto;
+        font-style: normal;
 }
 
 header {
-    text-align: left;
-    margin-bottom: 3em;
+        text-align: left;
+        margin-bottom: 3em;
 }
 
 footer {
-    text-align: center;
-    margin-top: 5em;
-    margin-bottom: 2em;
+        text-align: center;
+        margin-top: 5em;
+        margin-bottom: 2em;
 }
 
 a {
-    font-weight: bold;
-    text-decoration: none;
+        font-weight: bold;
+        text-decoration: none;
 }
 
 h2 {
-    margin-bottom: 1em;
+        margin-bottom: 1em;
 }
 
 h3 {
-    margin-bottom: 0.5em;
+        margin-bottom: 0.5em;
 }
 
 .content {
-    width: 50%;
-    margin: 16pt auto;
+        width: 50%;
+        margin: 16pt auto;
 }
 
 .header-links {
-    display: flex;
-    justify-content: space-evenly;
+        display: flex;
+        justify-content: space-evenly;
 }
 
 .header-link {
-    margin: 0em;
+        margin: 0em;
 }
 
 #posts {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    row-gap: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        row-gap: 1em;
 }
 
 .post {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    max-height: 15em;
-    margin-top: 0.75em;
-    margin-bottom: 0.75em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        max-height: 20em;
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
 }
 
 .post-title {
-    font-size: 2em;
-    margin-bottom: 1em;
+        font-size: 2em;
+        margin-bottom: 1em;
+}
+
+.post-abstract {
+        text-align: justify;
+        text-justify: inter-word;
 }
 
 .post-footer {
-    margin-top: 2em;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+        margin-top: 2em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 }
 
 .post-readbtn {
-    font-size: 16pt;
+        font-size: 16pt;
 }
 
 .post-date {
-    display: flex;
-    align-items: center;
+        display: flex;
+        align-items: center;
 }
 
 .post-text {
-    width: 60%;
+        width: 60%;
+}
+
+.post-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 1em;
+}
+
+.post-header-detail {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        justify-content: left;
+}
+
+.post-category {
+        margin-top: auto;
+        margin-bottom: auto;
+        font-weight: bold;
+}
+
+.post-tags {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        max-width: 50%;
+        flex-wrap: wrap;
+        font-weight: bold;
+        font-style: italic;
+}
+
+.post-tag {
+        margin-left: 1.5em;
+        padding: 0.5em;
+        background: lightgray;
+        border: 1px solid black;
+        border-radius: 5px;
 }
 
 .post-thumbnail {
-    max-width: 30%;
-    height: 15em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+        max-width: 30%;
+        height: 15em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
 }
 
 #post-content {
-    text-align: justify;
-    text-justify: inter-word;
+        text-align: justify;
+        text-justify: inter-word;
 }
 
 .thumbnail-img {
-    width: 100%;
-    height: 100%;
+        width: 100%;
+        height: 100%;
 }
 
 .timestamp {
-    font-family: monospace;
-    font-size: 1.2em;
+        font-family: monospace;
+        font-size: 1.2em;
 }
 
 @media (max-width: 1000px) {
-    .content {
-        width: 70%;
-    }
+        .content {
+                width: 70%;
+        }
 
-    .post {
-        flex-direction: column;
-        max-height: 100%;
-    }
+        .post {
+                flex-direction: column;
+                max-height: 100%;
+        }
 
-    .post-text {
-        width: 100%;
-        height: 60%;
-        margin-right: 0;
-        margin-bottom: 1em;
-    }
+        .post-text {
+                width: 100%;
+                height: 60%;
+                margin-right: 0;
+                margin-bottom: 1em;
+        }
 
-    .post-thumbnail {
-        height: 50%;
-        max-width: 60%;
-    }
+        .post-thumbnail {
+                height: 50%;
+                max-width: 60%;
+        }
 
-    .thumbnail-img {
-        height: 100%;
-    }
+        .thumbnail-img {
+                height: 100%;
+        }
 }
