@@ -1,7 +1,12 @@
 'use strict';
 
 const sqlite3 = require('sqlite3').verbose();
-const marked = require('marked');
+
+let marked;
+(async () => {
+    marked = await import('marked');
+})();
+
 const path = require('node:path');
 const markedCodeFormat = require('marked-code-format');
 
