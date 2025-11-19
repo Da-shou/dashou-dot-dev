@@ -41,21 +41,6 @@ const get_tags_for_post_query = `
         WHERE pt.id_post = ?;
         `;
 
-function checkIfPostExists(id) {
-    return new Promise((resolve, reject) => {
-        // Getting the details of a post
-        db.get(check_post_query, [id],
-            (err, post) => {
-                if (err) reject(err);
-                else if (post) {
-                    resolve(post);
-                } else {
-                    reject(new Error(`Post with id ${id} was not found in the database.`));
-                }
-            });
-    });
-}
-
 function getPostDetail(id) {
     return new Promise((resolve, reject) => {
         // Getting the details of a post
@@ -64,6 +49,8 @@ function getPostDetail(id) {
                 if (err) reject(err);
                 else if (post) {
                     resolve(post);
+                } else {
+                    reject("Invalid request");
                 }
             });
     });
@@ -91,13 +78,15 @@ function getPostTags(id) {
         db.all(get_tags_for_post_query, [id],
             (err, rows) => {
                 if (err) reject(err);
-
-                const tags = [];
-                rows.forEach((tag) => {
-                    tags.push(tag);
-                });
-
-                resolve(tags);
+                else if (rows) {
+                    const tags = [];
+                    rows.forEach((tag) => {
+                        tags.push(tag);
+                    });
+                    resolve(tags);
+                } else {
+                    reject("Invalid request");
+                }
             });
     });
 }
@@ -117,7 +106,7 @@ exports.list = async function(_, res) {
         });
 };
 
-exports.display_post = function (req, res) {
+exports.display_post = async function (req, res) {
     const id = req.params.id;
     const num = Number(id);
 
@@ -125,25 +114,20 @@ exports.display_post = function (req, res) {
         return res.status(400).send('Invalid request');
     }
 
-    checkIfPostExists(id).then(async _ => {
-        const post = await getPostDetail(id);
-        const tags = await getPostTags(id);
+    const post = await getPostDetail(id);
+    const tags = await getPostTags(id);
 
-        marked.use({
-            gfm: true,
-            pedantic: false,
-        });
+    marked.use({
+        gfm: true,
+        pedantic: false,
+    });
 
-        post.content = marked.parse(post.content);
-        // Getting the tags for the post.
+    post.content = marked.parse(post.content);
+    // Getting the tags for the post.
 
-        res.render('posts/display_post.ejs', {
-            title: post.title,
-            post: post,
-            tags: tags,
-        });
-    }).catch(err => {
-        console.log(err);
-        res.status(400).send('Invalid request');
+    res.render('posts/display_post.ejs', {
+        title: post.title,
+        post: post,
+        tags: tags,
     });
 };
