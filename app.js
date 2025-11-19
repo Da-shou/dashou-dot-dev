@@ -31,6 +31,10 @@ app.get("/post/:id", post.display_post);
 // Post about endpoint
 app.get("/about", about.index);
 
+app.use((req, res) => {
+    res.redirect('/');
+});
+
 app.listen(port, () => {
         console.log(`🚀 dashou-dot-dev started and listening on port ${port} !`);
 });

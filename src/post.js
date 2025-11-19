@@ -16,6 +16,10 @@ const db = new sqlite3.Database(path.join(__dirname, "../database/blogdata.db"),
 
 const max_abstract_length = 250;
 
+const check_post_query = `
+    SELECT id_post AS id FROM post WHERE id_post = ?;
+`;
+
 const get_post_list_query = `
         SELECT p.id_post AS id, p.id_category, p.title, p.abstract, p.thumbnail, p.timestamp, c.name AS category
         FROM post AS p
@@ -36,6 +40,21 @@ const get_tags_for_post_query = `
         INNER JOIN post_has_tag AS pt ON t.id_tag = pt.id_tag
         WHERE pt.id_post = ?;
         `;
+
+function checkIfPostExists(id) {
+    return new Promise((resolve, reject) => {
+        // Getting the details of a post
+        db.get(check_post_query, [id],
+            (err, post) => {
+                if (err) reject(err);
+                else if (post) {
+                    resolve(post);
+                } else {
+                    reject(new Error(`Post with id ${id} was not found in the database.`));
+                }
+            });
+    });
+}
 
 function getPostDetail(id) {
     return new Promise((resolve, reject) => {
@@ -98,23 +117,33 @@ exports.list = async function(_, res) {
         });
 };
 
-exports.display_post = async function (req, res) {
+exports.display_post = function (req, res) {
     const id = req.params.id;
+    const num = Number(id);
 
-    const post = await getPostDetail(id);
-    const tags = await getPostTags(id);
+    if (Number.isNaN(num) || !Number.isFinite(num)) {
+        return res.status(400).send('Invalid request');
+    }
 
-    marked.use({
-        gfm: true,
-        pedantic: false,
-    });
+    checkIfPostExists(id).then(async _ => {
+        const post = await getPostDetail(id);
+        const tags = await getPostTags(id);
 
-    post.content = marked.parse(post.content);
-    // Getting the tags for the post.
+        marked.use({
+            gfm: true,
+            pedantic: false,
+        });
 
-    res.render('posts/display_post.ejs', {
-        title: post.title,
-        post: post,
-        tags: tags,
+        post.content = marked.parse(post.content);
+        // Getting the tags for the post.
+
+        res.render('posts/display_post.ejs', {
+            title: post.title,
+            post: post,
+            tags: tags,
+        });
+    }).catch(err => {
+        console.log(err);
+        res.status(400).send('Invalid request');
     });
 };
