@@ -1,7 +1,9 @@
 'use strict';
 
 const sqlite3 = require('sqlite3').verbose();
+const marked = require('marked');
 const path = require('node:path');
+const markedCodeFormat = require('marked-code-format');
 
 const db = new sqlite3.Database(path.join(__dirname, "../database/blogdata.db"), sqlite3.OPEN_READWRITE, (err) => {
     if (err) console.error(err.message);
@@ -32,9 +34,14 @@ exports.display_post = function (req, res) {
             WHERE id_post = ${id}
             LIMIT 1`, (err, post) => {
         if (err) throw err;
-
         if (post) {
             const id_cat = post.id_category;
+            marked.use({
+		    gfm: true,
+		    pedantic: false,
+	    });
+	    post.content = marked.parse(post.content);
+	    console.log(post.content);
             db.get(`SELECT name
                     from category
                     WHERE category.id_category = ${id_cat}
