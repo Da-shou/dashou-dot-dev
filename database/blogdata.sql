@@ -1,4 +1,18 @@
 BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "category" (
+	"id_category"	INTEGER NOT NULL,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("id_category" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "comment" (
+	"id_comment"	INTEGER NOT NULL,
+	"author"	TEXT NOT NULL DEFAULT 'Author',
+	"content"	TEXT NOT NULL DEFAULT 'Content',
+	"timestamp"	TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"id_post"	INT NOT NULL,
+	PRIMARY KEY("id_comment" AUTOINCREMENT),
+	CONSTRAINT "fk_comment_post" FOREIGN KEY("id_post") REFERENCES "post"("id_post") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
 CREATE TABLE IF NOT EXISTS "post" (
 	"id_post"	INTEGER NOT NULL,
 	"title"	TEXT NOT NULL DEFAULT 'Default title',
@@ -10,6 +24,22 @@ CREATE TABLE IF NOT EXISTS "post" (
 	PRIMARY KEY("id_post" AUTOINCREMENT),
 	CONSTRAINT "fk_post_category" FOREIGN KEY("id_category") REFERENCES "category"("id_category") ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+CREATE TABLE IF NOT EXISTS "post_has_tag" (
+	"id_post"	INTEGER NOT NULL,
+	"id_tag"	INTEGER NOT NULL,
+	PRIMARY KEY("id_tag","id_post"),
+	CONSTRAINT "fk_post_has_tag_post" FOREIGN KEY("id_post") REFERENCES "post"("id_post") ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT "fk_post_has_tag_tag" FOREIGN KEY("id_tag") REFERENCES "tag"("id_tag") ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+CREATE TABLE IF NOT EXISTS "tag" (
+	"id_tag"	INTEGER NOT NULL,
+	"name"	TEXT NOT NULL,
+	PRIMARY KEY("id_tag" AUTOINCREMENT)
+);
+INSERT INTO "category" ("id_category","name") VALUES (1,'Programming'),
+ (2,'Music'),
+ (3,'Sport');
+INSERT INTO "comment" ("id_comment","author","content","timestamp","id_post") VALUES (1,'Kazuya','Join my tournament','2025-11-13 14:53:10',1);
 INSERT INTO "post" ("id_post","title","content","timestamp","id_category","abstract","thumbnail") VALUES (1,'Learning about pkg-config, GTK and GNU Make','<h2>I like to learn stuff</h2>
 <p>One of my favourites things to do in life is to learn about stuff. It might never ever come in handy and I might forget about it after a while, but the feeling of understanding stuff that my brain thought was unintelligible before is an irreplaceable feeling.</p>
 <p>So today, I wondered &quot;What should I use to make a GUI application that works on a <em>maximum</em> amount of operting systems ?&quot; Basically, I want to make an application that works under Windows, MacOS and Linux, but also on older version of these systems, for example Windows 7 or even older.</p>
@@ -112,7 +142,23 @@ clean :
 <p>So, first blog post. How exciting ! I don&#39;t really know what I&#39;m doing here to be honest, but I will for sure have more interesting things to say for the next posts. However, as I&#39;ve said, I <em>will</em> talk about anything I want here, so feel free to get bored :)</p>
 <p>This little GTK session allowed me to discover 3 new tools that I&#39;ve seen used everywhere and I just feel a little less scared of them now, which can only be considered a win.</p>
 <p>I think that&#39;s about all I had to say for today. Take care of yourself.</p>','2025-11-19 13:21:50',1,'I decided that it might be fun to look into GTK to learn how to develop portable applications. On the way, I learnt what pkg-config is and refreshed my GNU Make knowledge.','/thumb-2.png');
+INSERT INTO "post_has_tag" ("id_post","id_tag") VALUES (1,3),
+ (1,4);
+INSERT INTO "tag" ("id_tag","name") VALUES (1,'html'),
+ (2,'css'),
+ (3,'c'),
+ (4,'glfw'),
+ (5,'cpp');
+CREATE INDEX IF NOT EXISTS "fk_comment_post_idx" ON "comment" (
+	"id_post"
+);
 CREATE INDEX IF NOT EXISTS "fk_post_category_idx" ON "post" (
 	"id_category"
+);
+CREATE INDEX IF NOT EXISTS "fk_post_has_tag_post_idx" ON "post_has_tag" (
+	"id_post"
+);
+CREATE INDEX IF NOT EXISTS "fk_post_has_tag_tag_idx" ON "post_has_tag" (
+	"id_tag"
 );
 COMMIT;
