@@ -2,3 +2,4 @@ database/blogdata.db
 node_modules
 eslint.config.js
 .idea
+static

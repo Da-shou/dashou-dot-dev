@@ -31,6 +31,7 @@ app.get("/post/:id", post.display_post);
 // Post about endpoint
 app.get("/about", about.index);
 
+// Matching all other endpoints and redirecting to home
 app.use((req, res) => {
     res.redirect('/');
 });
