@@ -24,6 +24,7 @@ const get_post_list_query = `
         FROM post AS p
         LEFT JOIN category as c
         ON p.id_category = c.id_category
+        ORDER BY id DESC
         `;
 
 const get_post_details_query = `
